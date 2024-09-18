@@ -1,4 +1,3 @@
-
 class BSTNode{
     constructor(key,left=null,right=null){
         this.key = key;
@@ -37,26 +36,41 @@ class BST {
             }
             inserNode(this.root,key);
     }
-    deleteAtKey(key){
-    // make helper function
-        const deleteFunc = (node,key) => {
-            if(key < node.key){
-                deleteFunc(node.left,key)
-            }else if (key > node.right) {
-                deleteFunc(node.right,key)
+    delete(key){
+        this.root = this.deleteNode(this.root,key)
+    
+   
+    }
+     deleteNode (node,key)  {//node -> root
+        
+        if(node == null) return null;
+
+
+        if(key < node.key){
+           node.left =  this.deleteNode(node.left,key)
+        }else if (key > node.right) {
+            node.right = deleteNode(node.right,key)
+        }else{
+            if(node.left === null && node.right === null){
+                return null
+            }else if (node.left === null){
+                return node.right
+            }else if (node.right === null){
+                return node.left
             }else{
-                if(node.left == null && node.right){
-                    return null
-                }else if (node.left == null){
-                    return node.right
-                }else if (node.right == null){
-                    return node.left
-                }else{
-                    let tempNode = this.findMin(node.right);
-                    key
-                }
+                let tempNode = this.findMinNode(node.right);
+                node.key = tempNode.key
+                node.right = this.deleteNode(node.right,tempNode.key)
             }
         }
+        return node
+    }
+
+    findMinNode(node){
+        while(node.left !== null){
+            node = node.left
+        }
+        return node
     }
     
 }
